@@ -1,0 +1,29 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    container_name: Database
+    environment:
+      POSTGRES_DB: AvaliacaoPW
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: senha
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./Back 
+      dockerfile: Dockerfile
+    container_name: AvaliacaoPW.API
+    depends_on:
+      - db
+    ports:
+      - "120:120"
+    environment:
+      DATABASE: Host=db;Database=AvaliacaoPW;Username=postgres;Password=senha
+      SECRET: eyJpZCI6IjEiLCJzdWIiOiIxMjM0NTU0MzIxIiwibmFtZSI6Ik5hbWUgTmFtZSBOYW1lIiwiaWF0IjoxNjE1MTYxNTE2MX0
+
+volumes:
+  db-data:
