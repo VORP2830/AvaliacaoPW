@@ -1,6 +1,6 @@
-namespace AvaliacaoPW.Domain.Entities;
+namespace AvaliacaoPW.Application.Dtos;
 
-public class Address : BaseEntity
+public class AddressDto : BaseEntity
 {
     public string StreetAvenue { get; set; }
     public string District { get; set; }
@@ -9,10 +9,4 @@ public class Address : BaseEntity
     public string? Complement { get; set; }
     public string State { get; set; }
     public string City { get; set; }
-    public int ClientId { get; set; }
-    public Client Client { get; set; }
-    protected Address()
-    {
-        Active = true;
-    }
 }
