@@ -1,4 +1,7 @@
 using System.Text.Json.Serialization;
+using AvaliacaoPW.Application.Dtos.Mapping;
+using AvaliacaoPW.Application.Interfaces;
+using AvaliacaoPW.Application.Services;
 using AvaliacaoPW.Domain.Interfaces;
 using AvaliacaoPW.Infra.Data.Context;
 using AvaliacaoPW.Infra.Data.Repositories;
@@ -18,8 +21,13 @@ public static class DependecyInjection
         
         service.AddControllers().AddJsonOptions(options =>
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        
+        service.AddAutoMapper(typeof(MappingProfile));
 
         service.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        service.AddScoped<ITokenService, TokenService>();
+        service.AddScoped<IUserService, UserService>();
 
         return service;
     }

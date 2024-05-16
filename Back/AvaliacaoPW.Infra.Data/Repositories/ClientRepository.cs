@@ -31,14 +31,6 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
         return new PageList<Client>(items, totalCount, pageParams.PageNumber, pageParams.PageSize);
     }
 
-    public async Task<Client> GetByCPF(string cpf)
-    {
-        return await _context.Clients
-                                .AsNoTracking()
-                                .FirstOrDefaultAsync(u => u.Active &&
-                                                            u.CPF == cpf);
-    }
-
     public async Task<Client> GetById(int id)
     {
         return await _context.Clients
