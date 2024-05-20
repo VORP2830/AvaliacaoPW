@@ -1,4 +1,5 @@
 using AvaliacaoPW.Domain.Entities;
+using AvaliacaoPW.Domain.Pagination;
 
 namespace AvaliacaoPW.Domain.Interfaces;
 
