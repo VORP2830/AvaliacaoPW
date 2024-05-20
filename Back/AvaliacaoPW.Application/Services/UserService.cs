@@ -35,7 +35,7 @@ public class UserService : IUserService
         }
         if (isSuccess)
         {
-            string token = await _tokenService.GenerateToken(user.Id, user.Login);
+            string token = await _tokenService.GenerateToken(user.Id, user.Login, user.CompanyName);
             return new
             {
                 user.Name,
@@ -57,7 +57,7 @@ public class UserService : IUserService
         user.SetActive(true);
         _unitOfWork.UserRepository.Add(user);
         await _unitOfWork.SaveChangesAsync();
-        string token = await _tokenService.GenerateToken(user.Id, user.Login);
+        string token = await _tokenService.GenerateToken(user.Id, user.Login, user.CompanyName);
         return new
         {
             user.Name,
