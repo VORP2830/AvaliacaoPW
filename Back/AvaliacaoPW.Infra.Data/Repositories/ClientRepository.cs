@@ -14,7 +14,7 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
         _context = context;
     }
 
-    public async Task<PageList<Client>> GetAll(PageParams pageParams)
+    public async Task<PageList<Client>> GetPaginated(PageParams pageParams)
     {
         var query = _context.Clients
                                 .AsNoTracking()
@@ -29,6 +29,14 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
                             .ToListAsync();
 
         return new PageList<Client>(items, totalCount, pageParams.PageNumber, pageParams.PageSize);
+    }
+
+    public async Task<IEnumerable<Client>> GetAll()
+    {
+        return await _context.Clients
+                                .AsNoTracking()
+                                .Where(p => p.Active)
+                                .ToListAsync();
     }
 
     public async Task<Client> GetById(int id)
