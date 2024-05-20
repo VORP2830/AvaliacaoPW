@@ -1,6 +1,6 @@
 namespace AvaliacaoPW.Application.Dtos;
 
-public class ClientDto : BaseEntity
+public class PersonDto : BaseEntity
 {
     public string Title { get; set; }
     public string Name { get; set; }

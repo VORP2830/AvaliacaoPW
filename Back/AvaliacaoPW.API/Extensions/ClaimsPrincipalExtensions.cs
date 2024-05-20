@@ -8,4 +8,8 @@ public static class ClaimsPrincipalExtensions
     {
         return int.Parse(user.FindFirst("UserId").Value);
     }
+    public static int GetCompanyName(this ClaimsPrincipal user)
+    {
+        return int.Parse(user.FindFirst("CompanyName").Value);
+    }
 }

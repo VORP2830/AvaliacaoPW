@@ -16,12 +16,13 @@ public class TokenService : ITokenService
         _config = config;
     }
 
-    public async Task<string> GenerateToken(int userId, string login)
+    public async Task<string> GenerateToken(int userId, string login, string companyName)
     {
         var claims = new[]
         {
                 new Claim("UserId", userId.ToString()),
-                new Claim("UserName", login)
+                new Claim("UserName", login),
+                new Claim("CompanyName", companyName)
             };
         var creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET") ?? _config["Jwt:SecretKey"])), SecurityAlgorithms.HmacSha512Signature);
         var tokenDescription = new SecurityTokenDescriptor
