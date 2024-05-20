@@ -13,6 +13,7 @@ public class UnitOfWork : IUnitOfWork
     public IUserRepository UserRepository => new UserRepository(_context);
     public IClientRepository ClientRepository => new ClientRepository(_context);
     public IEmployeeRepository EmployeeRepository => new EmployeeRepository(_context);
+    public ICategoryRepository CategoryRepository => new CategoryRepository(_context);
 
     public async Task<bool> SaveChangesAsync()
     {
