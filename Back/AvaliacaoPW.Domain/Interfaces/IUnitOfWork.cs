@@ -6,6 +6,7 @@ public interface IUnitOfWork
     IClientRepository ClientRepository { get; }
     IEmployeeRepository EmployeeRepository { get; }
     ICategoryRepository CategoryRepository { get; }
+    ISupplierRepository SupplierRepository { get; }
     IProductRepository ProductRepository { get; }
     Task<bool> SaveChangesAsync();
 }

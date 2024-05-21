@@ -3,6 +3,7 @@ using System;
 using AvaliacaoPW.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AvaliacaoPW.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240520180534_Supplier")]
+    partial class Supplier
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,7 +217,6 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Product", b =>
             modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Supplier", b =>
                 {
                     b.Property<int>("Id")
@@ -226,32 +228,19 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("CategoryId")
                     b.Property<int>("AddressId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("InOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("InStock")
-                        .HasColumnType("integer");
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
@@ -304,15 +293,6 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Product", b =>
-                {
-                    b.HasOne("AvaliacaoPW.Domain.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
             modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Supplier", b =>
                 {
                     b.HasOne("AvaliacaoPW.Domain.Entities.Address", "Address")
