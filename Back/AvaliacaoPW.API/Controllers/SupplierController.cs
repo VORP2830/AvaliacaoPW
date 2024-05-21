@@ -1,9 +1,11 @@
 using AvaliacaoPW.Application.Dtos;
 using AvaliacaoPW.Application.Interfaces;
 using AvaliacaoPW.Domain.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvaliacaoPW.API.Controllers;
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class SupplierController : ControllerBase

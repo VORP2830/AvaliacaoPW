@@ -17,6 +17,8 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         var query = _context.Products
                                 .AsNoTracking()
+                                .Include(p => p.Category)
+                                .Include(p => p.Supplier)
                                 .Where(p => p.Active);
 
         query = query.OrderBy(e => e.Name);
