@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
     public IEmployeeRepository EmployeeRepository => new EmployeeRepository(_context);
     public ICategoryRepository CategoryRepository => new CategoryRepository(_context);
     public ISupplierRepository SupplierRepository => new SupplierRepository(_context);
+    public IProductRepository ProductRepository => new ProductRepository(_context);
 
     public async Task<bool> SaveChangesAsync()
     {
