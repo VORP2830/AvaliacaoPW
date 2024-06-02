@@ -49,6 +49,7 @@ public class ClientService : IClientService
         {
             throw new AvaliacaoPWException("Cliente não encontrado");
         }
+        _mapper.Map(model, client);
         _unitOfWork.ClientRepository.Update(client);
         await _unitOfWork.SaveChangesAsync();
         return _mapper.Map<ClientDto>(client);

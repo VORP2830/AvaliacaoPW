@@ -47,6 +47,7 @@ public class SupplierService : ISupplierService
         {
             throw new AvaliacaoPWException("Fornecedor não encontrado");
         }
+        _mapper.Map(model, supplier);
         _unitOfWork.SupplierRepository.Update(supplier);
         await _unitOfWork.SaveChangesAsync();
         return _mapper.Map<SupplierDto>(supplier);

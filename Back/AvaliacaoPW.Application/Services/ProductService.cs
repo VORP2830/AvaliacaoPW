@@ -50,6 +50,7 @@ public class ProductService : IProductService
         {
             throw new AvaliacaoPWException("Produto não encontrado");
         }
+        _mapper.Map(model, product);
         _unitOfWork.ProductRepository.Update(product);
         await _unitOfWork.SaveChangesAsync();
         return _mapper.Map<ProductDto>(product);

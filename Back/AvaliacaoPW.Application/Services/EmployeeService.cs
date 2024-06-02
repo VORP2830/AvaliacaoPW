@@ -48,6 +48,7 @@ public class EmployeeService : IEmployeeService
         {
             throw new AvaliacaoPWException("Funcionario não encontrado");
         }
+        _mapper.Map(model, employee);
         _unitOfWork.EmployeeRepository.Update(employee);
         await _unitOfWork.SaveChangesAsync();
         return _mapper.Map<EmployeeDto>(employee);

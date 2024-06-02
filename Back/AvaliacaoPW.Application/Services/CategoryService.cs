@@ -50,6 +50,7 @@ public class CategoryService : ICategoryService
         {
             throw new AvaliacaoPWException("Categoria não encontrado");
         }
+        _mapper.Map(model, category);
         _unitOfWork.CategoryRepository.Update(category);
         await _unitOfWork.SaveChangesAsync();
         return _mapper.Map<CategoryDto>(category);
