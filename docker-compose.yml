@@ -24,6 +24,7 @@ services:
     environment:
       DATABASE: Host=db;Database=AvaliacaoPW;Username=postgres;Password=senha
       SECRET: eyJpZCI6IjEiLCJzdWIiOiIxMjM0NTU0MzIxIiwibmFtZSI6Ik5hbWUgTmFtZSBOYW1lIiwiaWF0IjoxNjE1MTYxNTE2MX0
+      ASPNETCORE_ENVIRONMENT: Development
 
 volumes:
   db-data:

@@ -9,8 +9,6 @@ public class Address : BaseEntity
     public string? Complement { get; set; }
     public string State { get; set; }
     public string City { get; set; }
-    public int ClientId { get; set; }
-    public Client Client { get; set; }
     protected Address()
     {
         Active = true;

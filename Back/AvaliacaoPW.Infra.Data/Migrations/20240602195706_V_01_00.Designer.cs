@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AvaliacaoPW.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240521205641_Product_Supplier")]
-    partial class Product_Supplier
+    [Migration("20240602195706_V_01_00")]
+    partial class V_01_00
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,9 +39,6 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Complement")
                         .HasColumnType("text");
@@ -72,9 +69,6 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId")
-                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -124,6 +118,9 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -153,6 +150,8 @@ namespace AvaliacaoPW.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.ToTable("Clients");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Client");
@@ -174,8 +173,9 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("integer");
 
-                    b.Property<DateOnly>("BirthDate")
-                        .HasColumnType("date");
+                    b.Property<string>("BirthDate")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -188,8 +188,9 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("HireDate")
-                        .HasColumnType("date");
+                    b.Property<string>("HireDate")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("HomePhone")
                         .IsRequired()
@@ -316,15 +317,15 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
-            modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Address", b =>
+            modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Client", b =>
                 {
-                    b.HasOne("AvaliacaoPW.Domain.Entities.Client", "Client")
-                        .WithOne("Address")
-                        .HasForeignKey("AvaliacaoPW.Domain.Entities.Address", "ClientId")
+                    b.HasOne("AvaliacaoPW.Domain.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Employee", b =>
@@ -366,12 +367,6 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("AvaliacaoPW.Domain.Entities.Client", b =>
-                {
-                    b.Navigation("Address")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

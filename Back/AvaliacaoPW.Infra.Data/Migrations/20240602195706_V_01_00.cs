@@ -7,11 +7,33 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AvaliacaoPW.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Product_Supplier : Migration
+    public partial class V_01_00 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StreetAvenue = table.Column<string>(type: "text", nullable: false),
+                    District = table.Column<string>(type: "text", nullable: false),
+                    ZipCode = table.Column<string>(type: "text", nullable: false),
+                    Number = table.Column<string>(type: "text", nullable: true),
+                    Complement = table.Column<string>(type: "text", nullable: true),
+                    State = table.Column<string>(type: "text", nullable: false),
+                    City = table.Column<string>(type: "text", nullable: false),
+                    Active = table.Column<bool>(type: "boolean", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -45,38 +67,16 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Phone = table.Column<string>(type: "text", nullable: false)
+                    Phone = table.Column<string>(type: "text", nullable: false),
+                    AddressId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    StreetAvenue = table.Column<string>(type: "text", nullable: false),
-                    District = table.Column<string>(type: "text", nullable: false),
-                    ZipCode = table.Column<string>(type: "text", nullable: false),
-                    Number = table.Column<string>(type: "text", nullable: true),
-                    Complement = table.Column<string>(type: "text", nullable: true),
-                    State = table.Column<string>(type: "text", nullable: false),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    ClientId = table.Column<int>(type: "integer", nullable: false),
-                    Active = table.Column<bool>(type: "boolean", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Clients_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -88,8 +88,8 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CompanyName = table.Column<string>(type: "text", nullable: false),
-                    BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    HireDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    BirthDate = table.Column<string>(type: "text", nullable: false),
+                    HireDate = table.Column<string>(type: "text", nullable: false),
                     HomePhone = table.Column<string>(type: "text", nullable: false),
                     Extension = table.Column<string>(type: "text", nullable: false),
                     Active = table.Column<bool>(type: "boolean", nullable: false),
@@ -170,10 +170,9 @@ namespace AvaliacaoPW.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_ClientId",
-                table: "Addresses",
-                column: "ClientId",
-                unique: true);
+                name: "IX_Clients_AddressId",
+                table: "Clients",
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_AddressId",
@@ -200,6 +199,9 @@ namespace AvaliacaoPW.Infra.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
@@ -213,9 +215,6 @@ namespace AvaliacaoPW.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Addresses");
-
-            migrationBuilder.DropTable(
-                name: "Clients");
         }
     }
 }
