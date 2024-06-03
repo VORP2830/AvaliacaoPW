@@ -8,4 +8,6 @@ public class ProductDto : BaseEntity
     public int InOrder { get; set; }
     public int CategoryId { get; set; }
     public CategoryDto? Category { get; set; }
+    public int SupplierId { get; set; }
+    public SupplierDto? Supplier { get; set; }
 }
